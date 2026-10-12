@@ -64,6 +64,10 @@ If a decoder fails, the player tries the next one and shows a short message. Lon
 
 Settings > Player > Playback > Background play keeps the audio going when you leave the app, with notification buttons. Picture in picture is skipped while it is on.
 
+## Ads
+
+The app is free and shows ads from Start.io: one banner at the top and one at the bottom of the video list, and one full-screen video ad about every 3 hours. Ads only appear on the video list, never while a video is playing. Details are in the privacy policy (Settings > Privacy).
+
 ## Settings map
 
 List, Player (Screen, Controls, Navigation, Playback), Decoder, Audio, Subtitle, General, Privacy, Development.
