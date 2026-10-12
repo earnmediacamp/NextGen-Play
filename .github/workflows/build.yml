@@ -46,11 +46,34 @@ jobs:
           if [ -z "$ALIAS" ]; then echo "Keystore me key alias nahi mila (KS_B64 / KS_PASS check karo)"; exit 1; fi
           printf 'storeFile=nextgen-release.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$KS_PASS" "$ALIAS" "$KS_PASS" > "$PROJ/keystore.properties"
 
+      # LGPL FFmpeg audio decoders (AC3/EAC3/DTS/TrueHD...). Ek baar banta hai, phir cache se aata hai.
+      # Fail ho to bhi build chalta hai (bas ye audio formats phone ke decoder par depend karenge).
+      - name: FFmpeg LGPL AAR cache
+        id: ffcache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.PROJ }}/app/libs/media3-decoder-ffmpeg-lgpl.aar
+          key: ffmpeg-lgpl-media3-1.8.0-n6.0-v1
+
+      - name: FFmpeg LGPL AAR banao
+        if: steps.ffcache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          mkdir -p "$PROJ/app/libs"
+          bash "$PROJ/tools/build_ffmpeg_lgpl.sh" "$PROJ/app/libs/media3-decoder-ffmpeg-lgpl.aar"
+
       - name: APK build
         env:
           VER: ${{ inputs.version }}
+          STARTIO_ID: ${{ secrets.STARTIO_APP_ID }}
         working-directory: ${{ env.PROJ }}
-        run: gradle assembleRelease --no-daemon -PverCode=$((GITHUB_RUN_NUMBER + 10)) -PverName="$VER"
+        run: gradle assembleRelease --no-daemon -PverCode=$((GITHUB_RUN_NUMBER + 10)) -PverName="$VER" -PstartioAppId="$STARTIO_ID"
+
+      - name: Check (FFmpeg + Start.io APK me aaye ya nahi)
+        run: |
+          APK="$PROJ/app/build/outputs/apk/release/app-release.apk"
+          unzip -l "$APK" | grep -q "libffmpegJNI.so" && echo "FFmpeg (LGPL): ha" || echo "::warning::FFmpeg AAR APK me nahi hai (audio sirf phone decoders se)"
+          if [ -z "${{ secrets.STARTIO_APP_ID }}" ]; then echo "::warning::STARTIO_APP_ID secret nahi hai: demo ID + sirf TEST ads"; fi
 
       - name: APK file taiyar karo
         env:
