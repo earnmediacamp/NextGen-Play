@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NextGen Play - offline video player for Android</title>
+<meta name="description" content="NextGen Play is an offline video player for Android with gesture controls, full ASS subtitles and Hinglish subtitle translation. Free, no ads.">
+<meta name="theme-color" content="#050818">
+<link rel="icon" href="icon.png">
+<style>
+:root{--bg:#050818;--card:rgba(255,255,255,.05);--line:rgba(130,160,255,.22);--text:#eef1fa;--mute:#a4aec7;--blue:#2ca0ff;--cyan:#19d9ff;--violet:#a855f7}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);line-height:1.55;
+  background:radial-gradient(900px 500px at 0% -5%,rgba(25,217,255,.20),transparent 60%),radial-gradient(900px 600px at 100% 100%,rgba(168,85,247,.22),transparent 60%),var(--bg);
+  background-attachment:fixed}
+a{color:var(--cyan)}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+header.hero{padding:44px 0 26px;text-align:center}
+.icon{width:132px;height:132px;border-radius:30px;box-shadow:0 14px 40px rgba(60,100,255,.35)}
+h1{font-size:clamp(34px,8vw,56px);margin:18px 0 6px;letter-spacing:-.5px}
+.tag{color:var(--mute);font-size:clamp(16px,3.6vw,20px);margin:0 auto 22px;max-width:560px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:26px}
+.chip{border:1px solid var(--line);background:var(--card);padding:6px 14px;border-radius:99px;font-size:14px}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;text-decoration:none;font-weight:700;
+  font-size:18px;padding:16px 34px;border-radius:16px;box-shadow:0 10px 30px rgba(80,90,255,.4);border:0;cursor:pointer}
+.btn:active{transform:scale(.98)}
+.btn.off{opacity:.6;pointer-events:none}
+.meta{margin-top:12px;color:var(--mute);font-size:14px;min-height:21px}
+.note{margin-top:8px;font-size:13px;color:var(--mute)}
+section{padding:26px 0}
+h2{font-size:24px;margin:0 0 14px}
+.gal{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;-webkit-overflow-scrolling:touch}
+.gal img{height:min(62vh,470px);width:auto;flex:none;border-radius:18px;scroll-snap-align:center;border:1px solid var(--line);background:#0a0e24}
+.hint{color:var(--mute);font-size:13px;margin:2px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0;color:var(--mute);font-size:14.5px}
+.rel{margin-bottom:12px}
+.rel h3{margin:0;font-size:17px}
+.rel small{color:var(--mute)}
+.rel ul{margin:8px 0 0;padding-left:20px;color:var(--mute);font-size:14.5px}
+.rel p{margin:8px 0 0;color:var(--mute);font-size:14.5px}
+ol.steps{padding-left:22px;margin:0}
+ol.steps li{margin-bottom:8px}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+details p{color:var(--mute);margin:8px 0 0;font-size:14.5px}
+footer{padding:30px 0 50px;text-align:center;color:var(--mute);font-size:14px}
+footer a{margin:0 8px;white-space:nowrap}
+.dis{margin-top:12px;font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <img class="icon" src="icon.png" alt="NextGen Play icon">
+  <h1>NextGen Play</h1>
+  <p class="tag">An offline video player for Android with gesture controls, full ASS subtitles and Hinglish subtitle translation.</p>
+  <div class="chips">
+    <span class="chip">No ads</span><span class="chip">No accounts</span><span class="chip">Free and open source</span>
+  </div>
+  <a id="dl" class="btn off" href="#">Checking the latest version...</a>
+  <div id="meta" class="meta"></div>
+  <div class="note">Android 8.0 or newer. The file is an APK, so Android may ask you to allow installs. See the steps below.</div>
+</header>
+
+<section>
+  <h2>Preview</h2>
+  <div class="gal">
+    <img src="screenshots/01-library.png" alt="Library with folders and Continue Watching" loading="lazy">
+    <img src="screenshots/02-player.png" alt="Player with gesture controls and shortcuts" loading="lazy">
+    <img src="screenshots/03-settings.png" alt="Settings" loading="lazy">
+    <img src="screenshots/04-decoder.png" alt="HW, HW+ and SW decoder settings" loading="lazy">
+    <img src="screenshots/05-hinglish.png" alt="Hinglish subtitle translation" loading="lazy">
+  </div>
+  <p class="hint">Swipe to see more. These are illustrations of the app's layout with sample content.</p>
+</section>
+
+<section>
+  <h2>What it does</h2>
+  <div class="grid">
+    <div class="card"><h3>Gestures</h3><p>Swipe to seek, volume and brightness. Press and hold for 2x and slide to change the speed. Pinch to zoom and pan.</p></div>
+    <div class="card"><h3>Subtitles</h3><p>SRT, VTT and animated ASS/SSA. Delay, style, fonts and auto sync. Several speakers never overlap.</p></div>
+    <div class="card"><h3>Hinglish translation</h3><p>Translate subtitles into Hinglish, Hindi you can read in English letters. It asks your permission first.</p></div>
+    <div class="card"><h3>Decoders</h3><p>HW, HW+ and SW modes with automatic fallback, so more files play smoothly.</p></div>
+    <div class="card"><h3>Audio</h3><p>Equalizer, volume boost, audio delay and a remembered audio language.</p></div>
+    <div class="card"><h3>Playback</h3><p>Background play, picture in picture, resume, sleep timer and A-B repeat.</p></div>
+    <div class="card"><h3>Library</h3><p>Folders, search, favourites and a Continue Watching row.</p></div>
+    <div class="card"><h3>Private</h3><p>No ads, no accounts, no analytics. Your files stay on your phone.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>What is new</h2>
+  <div id="notes"><p class="hint">Loading...</p></div>
+</section>
+
+<section>
+  <h2>How to install</h2>
+  <ol class="steps">
+    <li>Tap <b>Download</b> above and wait for the APK to finish.</li>
+    <li>Open the file. If Android asks, allow your browser to install apps, then tap Install.</li>
+    <li>If Play Protect asks to scan the app, choose to scan it or install anyway. It asks because the app is not on the Play Store.</li>
+    <li>Open NextGen Play and allow access to your videos.</li>
+  </ol>
+  <p class="hint">After this, the app tells you when a new version is out and updates itself from inside the app. You do not need to come back here.</p>
+</section>
+
+<section>
+  <h2>Questions</h2>
+  <details><summary>Is it free?</summary><p>Yes. It is free software under the GPL-3.0 licence, and the source code is public.</p></details>
+  <details><summary>Does it have ads or track me?</summary><p>No. There are no ads, accounts or analytics. The only things that go online are the update check, links you enter yourself, and subtitle text if you choose to translate.</p></details>
+  <details><summary>Why is it not on the Play Store?</summary><p>It is shared directly from this page. That is why Android shows the install prompts above.</p></details>
+  <details><summary>Does it come with videos?</summary><p>No. NextGen Play does not provide, host or link to any video. It plays files on your phone and links you enter yourself.</p></details>
+</section>
+
+<footer>
+  <div>
+    <a href="privacy.html">Privacy policy</a>
+    <a id="lnkSrc" href="#">Source code</a>
+    <a id="lnkLic" href="#">Licences</a>
+    <a id="lnkGuide" href="#">Guide</a>
+  </div>
+  <div class="dis">NextGen Play does not provide any video content.</div>
+</footer>
+
+</div>
+<script>
+(function () {
+  var FALLBACK = { owner: 'earnmediacamp', repo: 'NextGen-Play' };   // sirf local preview ke liye; GitHub Pages par naam address se mil jata hai
+
+  function repoInfo() {
+    var h = location.hostname;
+    if (/\.github\.io$/.test(h)) {
+      var owner = h.split('.')[0];
+      var repo = location.pathname.split('/').filter(Boolean)[0];
+      if (owner && repo) return { owner: owner, repo: repo };
+    }
+    return FALLBACK;
+  }
+  var R = repoInfo();
+  var base = 'https://github.com/' + R.owner + '/' + R.repo;
+  document.getElementById('lnkSrc').href = base;
+  document.getElementById('lnkLic').href = base + '/blob/main/THIRD_PARTY_LICENSES.md';
+  document.getElementById('lnkGuide').href = base + '/blob/main/docs/GUIDE.md';
+
+  var dl = document.getElementById('dl'), meta = document.getElementById('meta'), notes = document.getElementById('notes');
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function mb(b) { return (b / 1048576).toFixed(1) + ' MB'; }
+  function when(d) { try { return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return ''; } }
+
+  // release notes ka halka sa markdown: "- point" list, **bold**, baaki paragraph
+  function md(text) {
+    var lines = String(text || '').split(/\r?\n/), out = '', inList = false;
+    lines.forEach(function (raw) {
+      var line = esc(raw.trim()).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      var m = /^[-*]\s+(.*)$/.exec(line);
+      if (m) { if (!inList) { out += '<ul>'; inList = true; } out += '<li>' + m[1] + '</li>'; }
+      else { if (inList) { out += '</ul>'; inList = false; } if (line) out += '<p>' + line + '</p>'; }
+    });
+    if (inList) out += '</ul>';
+    return out || '<p>Improvements and fixes.</p>';
+  }
+
+  function apkOf(rel) {
+    var a = (rel.assets || []).filter(function (x) { return /\.apk$/i.test(x.name); })[0];
+    return a || null;
+  }
+
+  function fail() {
+    dl.className = 'btn'; dl.textContent = 'Download';
+    dl.href = base + '/releases/latest';
+    meta.textContent = 'Could not check the latest version. This button opens the downloads.';
+    notes.innerHTML = '<p class="hint">Release notes could not be loaded right now.</p>';
+  }
+
+  function show(list) {
+    var rels = list.filter(function (r) { return !r.draft && !r.prerelease && apkOf(r); });
+    if (!rels.length) { fail(); return; }
+    var cur = rels[0], apk = apkOf(cur);
+    var ver = (cur.tag_name || '').replace(/^v/i, '');
+    dl.className = 'btn';
+    dl.href = apk.browser_download_url;
+    dl.setAttribute('download', apk.name);
+    dl.textContent = 'Download NextGen Play ' + (ver ? 'v' + ver : '');
+    meta.textContent = [ver ? 'Version ' + ver : '', when(cur.published_at), mb(apk.size)].filter(Boolean).join('  \u00B7  ');
+    notes.innerHTML = rels.slice(0, 4).map(function (r) {
+      var v = (r.tag_name || '').replace(/^v/i, '');
+      return '<div class="card rel"><h3>Version ' + esc(v) + ' <small>' + esc(when(r.published_at)) + '</small></h3>' + md(r.body) + '</div>';
+    }).join('');
+  }
+
+  // 10 minute ka cache: GitHub ki anjaan visitors par limit (60 / ghanta) se bachne ke liye
+  var KEY = 'ngp-releases', MAX_AGE = 10 * 60 * 1000;
+  try {
+    var c = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (c && Date.now() - c.t < MAX_AGE) { show(c.d); return; }
+  } catch (e) {}
+
+  fetch('https://api.github.com/repos/' + R.owner + '/' + R.repo + '/releases?per_page=8', { headers: { Accept: 'application/vnd.github+json' } })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (d) { try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} show(d); })
+    .catch(fail);
+})();
+</script>
+</body>
+</html>
