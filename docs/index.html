@@ -194,17 +194,18 @@ footer a{margin:0 8px;white-space:nowrap}
     }).join('');
   }
 
-  // 10 minute ka cache: GitHub ki anjaan visitors par limit (60 / ghanta) se bachne ke liye
-  var KEY = 'ngp-releases', MAX_AGE = 10 * 60 * 1000;
-  try {
-    var c = JSON.parse(localStorage.getItem(KEY) || 'null');
-    if (c && Date.now() - c.t < MAX_AGE) { show(c.d); return; }
-  } catch (e) {}
+  // Cache sirf pehli jhalak jaldi dikhane ke liye. Har visit par (1 minute se purana ho to) GitHub se taaza list laate hain,
+  // isliye naya release aate hi page par aa jata hai. Fetch fail ho jaye to purana cache dikhta rahta hai.
+  var KEY = 'ngp-releases', FRESH = 60 * 1000, cached = null;
+  try { cached = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+  if (cached && cached.d) show(cached.d);
+  if (cached && cached.d && Date.now() - cached.t < FRESH) return;
 
-  fetch('https://api.github.com/repos/' + R.owner + '/' + R.repo + '/releases?per_page=8', { headers: { Accept: 'application/vnd.github+json' } })
+  fetch('https://api.github.com/repos/' + R.owner + '/' + R.repo + '/releases?per_page=8&_=' + Date.now(),
+        { cache: 'no-store', headers: { Accept: 'application/vnd.github+json' } })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (d) { try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} show(d); })
-    .catch(fail);
+    .catch(function () { if (!(cached && cached.d)) fail(); });
 })();
 </script>
 </body>
