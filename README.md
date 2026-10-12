@@ -6,17 +6,18 @@ An offline video player for Android with gesture controls, full ASS subtitles an
 
 ## Preview
 
-<p align="center">
-  <img src="docs/screenshots/01-library.png" width="190" alt="Library">
-  <img src="docs/screenshots/03-settings.png" width="190" alt="Settings">
-  <img src="docs/screenshots/04-decoder.png" width="190" alt="Decoder">
-  <img src="docs/screenshots/05-hinglish.png" width="190" alt="Hinglish subtitles">
-</p>
-<p align="center">
-  <img src="docs/screenshots/02-player.png" width="780" alt="Player">
-</p>
+<table>
+  <tr>
+    <td width="25%"><img src="docs/screenshots/01-library.png" width="100%" alt="Library"></td>
+    <td width="25%"><img src="docs/screenshots/03-settings.png" width="100%" alt="Settings"></td>
+    <td width="25%"><img src="docs/screenshots/04-decoder.png" width="100%" alt="Decoder"></td>
+    <td width="25%"><img src="docs/screenshots/05-hinglish.png" width="100%" alt="Hinglish subtitles"></td>
+  </tr>
+</table>
 
-<p align="center"><sub>Preview images show the app's layout with sample content. They are illustrations, not captures of a real library.</sub></p>
+<p align="center"><img src="docs/screenshots/02-player.png" width="100%" alt="Player"></p>
+
+<p align="center"><sub>Preview images show the app's layout with sample content. They are illustrations, not captures of a real library. Tap an image to see it larger.</sub></p>
 
 ## What it is
 
