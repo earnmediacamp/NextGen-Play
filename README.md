@@ -1,10 +1,22 @@
-<p align="center"><img src="docs/icon.png" width="140" alt="NextGen Play logo"></p>
+<p align="center"><img src="docs/screenshots/banner.png" alt="NextGen Play"></p>
 
-<h1 align="center">NextGen Play</h1>
+<p align="center">
+An offline video player for Android with gesture controls, full ASS subtitles and Hinglish subtitle translation.
+</p>
 
-<p align="center">An offline video player for Android with gesture controls, full ASS subtitles and Hinglish subtitle translation.</p>
+## Preview
 
-<!-- Screenshots go here once they are ready (docs/screenshots/). -->
+<p align="center">
+  <img src="docs/screenshots/01-library.png" width="190" alt="Library">
+  <img src="docs/screenshots/03-settings.png" width="190" alt="Settings">
+  <img src="docs/screenshots/04-decoder.png" width="190" alt="Decoder">
+  <img src="docs/screenshots/05-hinglish.png" width="190" alt="Hinglish subtitles">
+</p>
+<p align="center">
+  <img src="docs/screenshots/02-player.png" width="780" alt="Player">
+</p>
+
+<p align="center"><sub>Preview images show the app's layout with sample content. They are illustrations, not captures of a real library.</sub></p>
 
 ## What it is
 
@@ -12,13 +24,16 @@ NextGen Play plays video files on your phone and links you type in yourself. It 
 
 ## Highlights
 
-- Gestures: swipe to seek, volume and brightness, double-tap, press and hold for 2x speed, pinch to zoom
-- Subtitles: SRT, VTT, ASS/SSA with animated rendering, delay, styling, fonts and auto sync
-- Optional subtitle translation, including Hinglish (Hindi in English letters). It asks for permission first
-- Decoder modes HW, HW+ and SW, with automatic fallback when one fails
-- Equalizer, volume boost, audio delay and remembered audio language
-- Background play with notification controls, picture in picture, resume and sleep timer
-- Library with folders, search and favourites, and a full Settings screen
+- **Gestures:** swipe to seek, volume and brightness, double-tap, press and hold for 2x (slide up or down to change the speed), pinch to zoom and pan
+- **Subtitles:** SRT, VTT and ASS/SSA with animated rendering, delay, styling, fonts and auto sync
+- **Translation:** optional subtitle translation, including Hinglish (Hindi in English letters). It asks for permission first
+- **Decoders:** HW, HW+ and SW modes with automatic fallback when one fails
+- **Audio:** equalizer, volume boost, audio delay and remembered audio language
+- **Playback:** background play with notification controls, picture in picture, resume, sleep timer, A-B repeat
+- **Library:** folders, search and favourites, with a full Settings screen
+- **Tools:** log viewer and settings export and import
+
+A short tour of every feature is in the [guide](docs/GUIDE.md).
 
 ## Download
 
@@ -40,11 +55,11 @@ NextGen Play stands on the work of these people and projects. Thank you.
 | [bsdiff](https://www.daemonology.net/bsdiff/) | Colin Percival | Small patch updates | BSD |
 | Google Translate web service | Google | Optional subtitle translation (service only) | Service terms |
 
-Logo by the project owner.
+Full notes are in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md), and the same list is inside the app under Settings > Privacy. The logo is by the project owner.
 
 ## Privacy
 
-Everything stays on your device. Read the full policy in the app under Settings > Privacy.
+Everything stays on your device. The only things that go online are the update check, links you enter yourself, and subtitle text if you allow translation. Read the full policy in the app under Settings > Privacy.
 
 ## Disclaimer
 
@@ -52,4 +67,6 @@ NextGen Play does not provide, host or link to any video content. It plays files
 
 ## Licence
 
-GPL-3.0, because it includes NextLib (GPL-3.0). See [LICENSE](LICENSE).
+NextGen Play is free software under the **GNU General Public License v3.0**, because it includes NextLib, which is GPL-3.0. You can use, study, share and change it under that licence. The full text is in [LICENSE](LICENSE), and the source code is in this repository.
+
+Copyright (C) 2026 The NextGen Play authors.
