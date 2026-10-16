@@ -1,15 +1,25 @@
 name: Build and Release APK
 
+# Repo me source.zip push / upload hote hi build chalta hai. Version khud badhta hai (pichle release + 1).
+# Haath se chalana ho to Actions > Run workflow (version khali chhodo = auto, ya khud likho).
 on:
+  push:
+    branches: [main, master]
+    paths: ["source.zip"]
   workflow_dispatch:
     inputs:
       version:
-        description: "Version name (jaise 1.2)"
-        required: true
+        description: "Version (khali = auto: pichle release + 1)"
+        required: false
+        default: ""
       notes:
         description: "Changelog (chhota sa)"
         required: false
         default: "Bug fixes"
+
+concurrency:
+  group: build-release
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -19,6 +29,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Version rule: pichle release x.y.z -> x.y.(z+1). z 20 se upar nahi jata: 1.4.20 ke baad 1.5.1
+      - name: Version nikalo
+        env:
+          GH_TOKEN: ${{ github.token }}
+          IN_VER: ${{ inputs.version }}
+          IN_NOTES: ${{ inputs.notes }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          MAXPATCH=20
+          if [ -n "$IN_VER" ]; then
+            VER="$IN_VER"
+          else
+            PREV=$(gh release view --json tagName -q .tagName 2>/dev/null || echo "")
+            PREV="${PREV#v}"
+            if [[ "$PREV" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+              MAJ=${BASH_REMATCH[1]}; MIN=${BASH_REMATCH[2]}; PAT=${BASH_REMATCH[3]}
+              if [ "$PAT" -ge "$MAXPATCH" ]; then MIN=$((MIN + 1)); PAT=1; else PAT=$((PAT + 1)); fi
+              VER="$MAJ.$MIN.$PAT"
+            else
+              echo "::warning::Pichla release x.y.z format me nahi mila ('$PREV'), 1.0.1 se shuru"
+              VER="1.0.1"
+            fi
+          fi
+          NOTES="${IN_NOTES:-}"
+          if [ -z "$NOTES" ] && [ -n "$COMMIT_MSG" ]; then NOTES=$(printf '%s' "$COMMIT_MSG" | head -n1); fi
+          [ -z "$NOTES" ] && NOTES="Bug fixes"
+          echo "Naya version: $VER"
+          echo "VER=$VER" >> "$GITHUB_ENV"
+          echo "NOTES=$NOTES" >> "$GITHUB_ENV"
 
       - name: Source zip kholo
         run: |
@@ -64,7 +104,7 @@ jobs:
 
       - name: APK build
         env:
-          VER: ${{ inputs.version }}
+          VER: ${{ env.VER }}
           STARTIO_ID: ${{ secrets.STARTIO_APP_ID }}
         working-directory: ${{ env.PROJ }}
         run: gradle assembleRelease --no-daemon -PverCode=$((GITHUB_RUN_NUMBER + 10)) -PverName="$VER" -PstartioAppId="$STARTIO_ID"
@@ -77,7 +117,7 @@ jobs:
 
       - name: APK file taiyar karo
         env:
-          VER: ${{ inputs.version }}
+          VER: ${{ env.VER }}
         run: cp "$PROJ/app/build/outputs/apk/release/app-release.apk" "NextGenPlay-$VER.apk"
 
       # Pichle release se naye APK ka chhota patch. Fail ho (ya pehla release ho) to bhi release chalta hai, bas poora APK jayega.
@@ -85,7 +125,7 @@ jobs:
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-          VER: ${{ inputs.version }}
+          VER: ${{ env.VER }}
         run: |
           set -e
           sudo apt-get install -y bsdiff > /dev/null
@@ -109,8 +149,8 @@ jobs:
 
       - name: version.json banao
         env:
-          VER: ${{ inputs.version }}
-          NOTES: ${{ inputs.notes }}
+          VER: ${{ env.VER }}
+          NOTES: ${{ env.NOTES }}
         run: |
           SHA=$(sha256sum "NextGenPlay-$VER.apk" | cut -d' ' -f1)
           SIZE=$(stat -c%s "NextGenPlay-$VER.apk")
@@ -131,8 +171,8 @@ jobs:
       - name: GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          VER: ${{ inputs.version }}
-          NOTES: ${{ inputs.notes }}
+          VER: ${{ env.VER }}
+          NOTES: ${{ env.NOTES }}
         run: |
           ASSETS=("NextGenPlay-$VER.apk" version.json)
           if [ -n "${PATCH_FILE:-}" ] && [ -f "$PATCH_FILE" ]; then ASSETS+=("$PATCH_FILE"); fi
