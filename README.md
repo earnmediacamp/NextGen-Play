@@ -21,7 +21,7 @@ An offline video player for Android with gesture controls, full ASS subtitles an
 
 ## What it is
 
-NextGen Play plays video files on your phone and links you type in yourself. It has no accounts and no analytics. It is free and shows ads from Start.io on the video list. It is built on Media3 / ExoPlayer.
+NextGen Play plays video files on your phone and links you type in yourself. It has no accounts. It uses anonymous Firebase Analytics counts (installs, active users, app version, country); no video names or file paths are sent. It is free and shows ads from Start.io on the video list. It is built on Media3 / ExoPlayer.
 
 ## Highlights
 
@@ -32,13 +32,17 @@ NextGen Play plays video files on your phone and links you type in yourself. It 
 - **Audio:** equalizer, volume boost, audio delay and remembered audio language
 - **Playback:** background play with notification controls, picture in picture, resume, sleep timer, A-B repeat
 - **Library:** folders, search and favourites, with a full Settings screen
+- **Folder tools:** select several folders, delete, move, copy, rename, pin to top, hide, mark watched, properties
+- **Recycle bin:** deleted videos (with their subtitles) wait for 7 to 60 days and can be restored
+- **Private vault:** hide videos behind a PIN, out of the library and other gallery apps
+- **Earphones:** audio calibration saved separately for each Bluetooth or wired output
 - **Tools:** log viewer and settings export and import
 
 A short tour of every feature is in the [guide](docs/GUIDE.md).
 
 ## Ads
 
-NextGen Play is free and supported by ads from Start.io: one banner at the top and one at the bottom of the video list, and one full-screen video ad about every 3 hours. Ads only appear on the video list and never during playback.
+NextGen Play is free and supported by ads from Start.io: one banner at the bottom of the video list, and one full-screen video ad at most once every 3 hours. Ads only appear on the video list and never during playback.
 
 ## Download
 
@@ -64,7 +68,7 @@ Full notes are in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md), and the sa
 
 ## Privacy
 
-Your videos, history, favourites and settings stay on your device. Things that go online: the update check, links you enter yourself, subtitle text if you allow translation, and ads. The ads are provided by Start.io, which may use your advertising ID, IP address and approximate device information to choose and measure ads, and asks for consent where the law requires it. Read the full policy in the app under Settings > Privacy.
+Your videos, history, favourites and settings stay on your device. Things that go online: the update check, anonymous Firebase Analytics usage counts, links you enter yourself, subtitle text if you allow translation, and ads. The ads are provided by Start.io, which may use your advertising ID, IP address and approximate device information to choose and measure ads, and asks for consent where the law requires it. Read the full policy in the app under Settings > Privacy.
 
 ## Disclaimer
 
