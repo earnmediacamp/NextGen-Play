@@ -66,7 +66,7 @@ Settings > Player > Playback > Background play keeps the audio going when you le
 
 ## Ads
 
-The app is free and shows ads from Start.io: one banner at the top and one at the bottom of the video list, and one full-screen video ad about every 3 hours. Ads only appear on the video list, never while a video is playing. Details are in the privacy policy (Settings > Privacy).
+The app is free and shows ads from Unity LevelPlay: one banner at the bottom of the video list, and one full-screen video ad at most once every 40 minutes, after you return to the list from the player. Tap Go ad-free and watch rewarded videos to remove ads: 1 video gives 6 hours, 2 give 12 hours and 4 give 24 hours. Ads only appear on the video list, never while a video is playing. Details are in the privacy policy (Settings > Privacy).
 
 ## Settings map
 
