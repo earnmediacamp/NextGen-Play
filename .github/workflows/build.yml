@@ -36,7 +36,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           IN_VER: ${{ inputs.version }}
           IN_NOTES: ${{ inputs.notes }}
-          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
           MAXPATCH=20
           if [ -n "$IN_VER" ]; then
@@ -53,8 +52,9 @@ jobs:
               VER="1.0.1"
             fi
           fi
+          # Changelog: haath se chalaya to jo likha wahi, warna (push par) hamesha "Bug fixes".
+          # Commit message use nahi hota (GitHub web upload ka message "Add files via upload" hota hai).
           NOTES="${IN_NOTES:-}"
-          if [ -z "$NOTES" ] && [ -n "$COMMIT_MSG" ]; then NOTES=$(printf '%s' "$COMMIT_MSG" | head -n1); fi
           [ -z "$NOTES" ] && NOTES="Bug fixes"
           echo "Naya version: $VER"
           echo "VER=$VER" >> "$GITHUB_ENV"
@@ -105,15 +105,13 @@ jobs:
       - name: APK build
         env:
           VER: ${{ env.VER }}
-          STARTIO_ID: ${{ secrets.STARTIO_APP_ID }}
         working-directory: ${{ env.PROJ }}
-        run: gradle assembleRelease --no-daemon -PverCode=$((GITHUB_RUN_NUMBER + 10)) -PverName="$VER" -PstartioAppId="$STARTIO_ID"
+        run: gradle assembleRelease --no-daemon -PverCode=$((GITHUB_RUN_NUMBER + 10)) -PverName="$VER"
 
-      - name: Check (FFmpeg + Start.io APK me aaye ya nahi)
+      - name: Check (FFmpeg APK me aaya ya nahi)
         run: |
           APK="$PROJ/app/build/outputs/apk/release/app-release.apk"
           unzip -l "$APK" | grep -q "libffmpegJNI.so" && echo "FFmpeg (LGPL): ha" || echo "::warning::FFmpeg AAR APK me nahi hai (audio sirf phone decoders se)"
-          if [ -z "${{ secrets.STARTIO_APP_ID }}" ]; then echo "::warning::STARTIO_APP_ID secret nahi hai: demo ID + sirf TEST ads"; fi
 
       - name: APK file taiyar karo
         env:
