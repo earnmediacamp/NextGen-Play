@@ -36,7 +36,7 @@ NextGen Play plays video files on your phone and links you type in yourself. It 
 - **Recycle bin:** deleted videos (with their subtitles) wait for 7 to 60 days and can be restored
 - **Private vault:** hide videos behind a PIN, out of the library and other gallery apps
 - **Earphones:** audio calibration saved separately for each Bluetooth or wired output
-- **Tools:** log viewer and settings export and import
+- **Tools:** log viewer, settings export and import, and a Report a problem form (email with up to 4 screenshots)
 
 A short tour of every feature is in the [guide](docs/GUIDE.md).
 
