@@ -78,3 +78,5 @@ List, Player (Screen, Controls, Navigation, Playback), Decoder, Audio, Subtitle,
 ## Updates and privacy
 
 The app checks for a new version about once a day and offers it from the Releases page. The privacy policy and open-source licences are in Settings > Privacy.
+
+Found a bug? Open Settings > Report a problem, pick a topic, describe what went wrong and add up to 4 screenshots. Your email app opens with everything filled in, and nothing is sent until you press Send.
